@@ -28,7 +28,7 @@ const products = [
   },
 ];
 
-export default class storage {
+export default class Storage {
   //add new category
   //save category
   //get all category
@@ -43,14 +43,14 @@ export default class storage {
     return sortedCategories;
   }
   static savecategory(categoryToSave) {
-    const savedCategories = storage.getAllCategories();
+    const savedCategories = Storage.getAllCategories();
     // edit save
     //new save
     const existedItem = savedCategories.find((c) => c.id === categoryToSave.id);
     if (existedItem) {
       //edit
       existedItem.title = categoryToSave.title;
-      existedItem.description = existedItem.description;
+      existedItem.description = categoryToSave.description;
     } else {
       //new
       categoryToSave.id = new Date().getTime();
@@ -65,5 +65,23 @@ export default class storage {
     return savedProducts.sort((a, b) => {
       return new Date(a.createdAt) > new Date(b.createdAt) ? -1 : 1;
     });
+  }
+  static savedProducts(productToSave) {
+    const savedProducts = Storage.getAllProducts();
+    // edit save
+    //new save
+    const existedItem = savedProducts.find((c) => c.id === productToSave.id);
+    if (existedItem) {
+      //edit
+      existedItem.title = productToSave.title;
+      existedItem.quantity = productToSave.description;
+      existedItem.category = productToSave.category;
+    } else {
+      //new
+      productToSave.id = new Date().getTime();
+      productToSave.createdAt = new Date().toISOString();
+      savedProducts.push(productToSave);
+    }
+    localStorage.setItem("products", JSON.stringify(savedProducts));
   }
 }

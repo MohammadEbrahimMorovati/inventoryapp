@@ -1,8 +1,13 @@
-class App{
+import CategoryView from "./CategoryView.js";
+import ProductView from "./ProductView.js";
 
-}
-
-
+document.addEventListener("DOMContentLoaded", () => {
+  CategoryView.setApp();
+  ProductView.setApp();
+  console.log(ProductView);
+  CategoryView.createCategoriesList();
+  ProductView.createProductsList();
+});
 
 //target:
 //1.create category
@@ -10,7 +15,7 @@ class App{
 //3.edite product
 //4.remove product
 //5.save product in local storage
-//  storage class for handle application methods 
+//  storage class for handle application methods
 //  productview class
 //  categoryview class
 //  main and app class
