@@ -7,7 +7,7 @@ const categories = [
   },
   {
     id: 2,
-    title: "back",
+    title: "backend",
     description: "backend",
     createdAt: "2023-08-07T22:05:46.066Z",
   },
@@ -87,5 +87,10 @@ export default class Storage {
       savedProducts.push(productToSave);
     }
     localStorage.setItem("products", JSON.stringify(savedProducts));
+  }
+  static deleteProduct(id) {
+    const savedProducts = Storage.getAllProducts();
+    const filteredProducts = savedProducts.filter((p) => p.id != id);
+    localStorage.setItem("products", JSON.stringify(filteredProducts));
   }
 }
