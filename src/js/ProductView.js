@@ -1,10 +1,13 @@
-import Storage from "./Storage";
+import Storage from "./Storage.js";
 
 const addNewProductBtn = document.getElementById("add-new-product");
-
+const searchInput = document.querySelector("#search-input");
+const selectedSort = document.querySelector("#sort-products");
 class ProductView {
   constructor() {
     addNewProductBtn.addEventListener("click", (e) => this.addnewProduct(e));
+    searchInput.addEventListener("input", (e) => this.searchProducts(e));
+    selectedSort.addEventListener("change", (e) => this.sortProducts(e));
     this.products = [];
   }
   setApp() {
@@ -19,11 +22,11 @@ class ProductView {
     if (!title || !category || !quantity) return;
     Storage.savedProducts({ title, category, quantity });
     this.products = Storage.getAllProducts();
-    this.createProductsList();
+    this.createProductsList(this.products);
   }
-  createProductsList() {
+  createProductsList(products) {
     let result = "";
-    this.products.forEach((item) => {
+    products.forEach((item) => {
       const selectedCategory = Storage.getAllCategories().find(
         (c) => c.id == item.category
       );
@@ -42,9 +45,9 @@ class ProductView {
               >${item.quantity}</span
             >
             <button
-              class="border px-2 py-0.5 rounded-2xl border-red-500 text-red-500 " data-id=${
+              class="border px-2 py-0.5 rounded-2xl border-red-500 text-red-500" data-id=${
                 item.id
-              }
+              } 
             >
               delete
             </button>
@@ -53,6 +56,20 @@ class ProductView {
     });
     const productDOM = document.getElementById("products-list");
     productDOM.innerHTML = result;
+  }
+  searchProducts(e) {
+    const value = e.target.value.trim().toLowerCase();
+    const filteredProducts = this.products.filter((p) =>
+      p.title.toLowerCase().includes(value)
+    );
+    this.products = filteredProducts;
+    console.log(this.products);
+    this.createProductsList(filteredProducts);
+  }
+  sortProducts(e) {
+    const value = e.target.value;
+    this.products = Storage.getAllProducts(value);
+    this.createProductsList(this.products);
   }
 }
 export default new ProductView();
