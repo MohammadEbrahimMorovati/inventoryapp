@@ -1,9 +1,10 @@
-import CategoryView from "./CategoryView.js";
+import CategoryView from "./CategoryView.js"
 import ProductView from "./ProductView.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   CategoryView.setApp();
   ProductView.setApp();
+  console.log(CategoryView);
   console.log(ProductView);
   CategoryView.createCategoriesList(CategoryView.categories);
   ProductView.createProductsList(ProductView.products);

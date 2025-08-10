@@ -33,14 +33,14 @@ class CategoryView {
     categoryWrapper.classList.add("hidden");
     toggleAddCategoryBtn.classList.remove("hidden");
   }
-  setApp() {
+  setApp() {  
     this.categories = Storage.getAllCategories();
   }
-  createCategoriesList(categories) {
+  createCategoriesList() {
     let result = ` <option class="bg-slate-500 text-slate-400" value="">
                   select category
                 </option>`;
-    categories.forEach((element) => {
+    this.categories.forEach((element) => {
       result += ` <option class="bg-slate-500 text-slate-400" value=${element.id}>
                   ${element.title}
                 </option>`;

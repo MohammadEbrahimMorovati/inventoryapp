@@ -9,7 +9,7 @@ const categories = [
     id: 2,
     title: "back",
     description: "backend",
-    createdAt: "2023-08-07T22:05:36.066Z",
+    createdAt: "2023-08-07T22:05:46.066Z",
   },
 ];
 
@@ -23,7 +23,7 @@ const products = [
   {
     id: 2,
     title: "next",
-    category: "front",
+    category: "back",
     updated: "2025-01-07T22:05:36.066Z",
   },
 ];
@@ -60,13 +60,13 @@ export default class Storage {
     localStorage.setItem("category", JSON.stringify(savedCategories));
   }
   static getAllProducts(sort = "newest") {
-    const savedProducts = JSON.parse(localStorage.getItem("category")) || [];
+    const savedProducts = JSON.parse(localStorage.getItem("products")) || [];
 
     return savedProducts.sort((a, b) => {
       if (sort === "newest") {
-        return new Date(a.createdAt) > new Date(b.createdAt) ? -1 : 1;
+        return new Date(a.updated) > new Date(b.updated) ? 1 : -1;
       } else if (sort === "oldest") {
-        return new Date(a.createdAt) > new Date(b.createdAt) ? 1 : -1;
+        return new Date(a.updated) > new Date(b.updated) ? -1 : 1;
       }
     });
   }
@@ -78,12 +78,12 @@ export default class Storage {
     if (existedItem) {
       //edit
       existedItem.title = productToSave.title;
-      existedItem.quantity = productToSave.description;
+      existedItem.quantity = productToSave.quantity;
       existedItem.category = productToSave.category;
     } else {
       //new
       productToSave.id = new Date().getTime();
-      productToSave.createdAt = new Date().toISOString();
+      productToSave.updated = new Date().toISOString();
       savedProducts.push(productToSave);
     }
     localStorage.setItem("products", JSON.stringify(savedProducts));
