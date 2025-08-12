@@ -9,6 +9,7 @@ class ProductView {
     addNewProductBtn.addEventListener("click", (e) => this.addnewProduct(e));
     searchInput.addEventListener("input", (e) => this.searchProducts(e));
     selectedSort.addEventListener("change", (e) => this.sortProducts(e));
+    deleteProduct.addEventListener("click", (e) => this.deleteProduct(e));
     this.products = [];
   }
   setApp() {
